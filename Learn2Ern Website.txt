@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lern2ern.io</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Color Variables */
+        :root {
+            --purple-primary: #7C3AED;
+            --purple-secondary: #6D28D9;
+            --purple-tertiary: #4C1D95;
+            --dark-bg: #0F0F15;
+            --dark-card: #1A1A25;
+            --neon-purple: #8B5CF6;
+            --text-primary: #E5E7EB;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--purple-primary);
+            width: 0%;
+            z-index: 1001;
+            transition: width 0.2s ease;
+        }
+
+        /* Cyber Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                var(--dark-bg) 20%,
+                var(--purple-tertiary) 50%,
+                var(--dark-bg) 80%
+            );
+            background-size: 200% 200%;
+            animation: cyberBackground 10s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes cyberBackground {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glow {
+            0% { background-position: -100% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes modalFadeIn {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes microBounce {
+            0% { transform: scale(0.95); }
+            30% { transform: scale(1.05); }
+            60% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+
+        /* Slimmer and Aesthetic Header */
+        header {
+            padding: 1rem 5%;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 21, 0.9);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(15, 15, 21, 1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--purple-primary), var(--neon-purple), var(--purple-primary));
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s linear infinite;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--purple-primary), transparent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 10rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-out;
+            background: linear-gradient(45deg, #fff, var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: fadeIn 1s ease-out 0.2s backwards;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            position: relative;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            background: var(--dark-card);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 8px 20px rgba(124, 58, 237, 0.3);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .feature:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+            border: 1px solid var(--neon-purple);
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            color: var(--purple-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            background: linear-gradient(135deg, var(--purple-primary), var(--neon-purple));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature p {
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .feature:hover p {
+            color: var(--neon-purple);
+        }
+
+        /* Contact Info Styles */
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-info i {
+            font-size: 1.5rem;
+            color: var(--purple-primary);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info i:hover {
+            transform: rotate(20deg) scale(1.2);
+            color: var(--neon-purple);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-icon {
+            font-size: 1.2rem;
+            color: rgba(229, 231, 235, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--purple-primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-card);
+            padding: 1.5rem 5%;
+            text-align: center;
+            margin-top: 3rem;
+            position: relative;
+            border-top: 1px solid rgba(124, 58, 237, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: rgba(229, 231, 235, 0.8);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            nav a {
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                padding: 6rem 5%;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            animation: modalFadeIn 0.5s ease-out;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--purple-primary);
+            text-align: center;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-content input {
+            padding: 0.8rem;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 8px;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .modal-content input:focus {
+            border-color: var(--purple-primary);
+        }
+
+        .modal-content button {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .modal-content .toggle-form {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-content .toggle-form:hover {
+            color: var(--purple-primary);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--purple-primary);
+        }
+
+        /* Get Started Button */
+        .cta-button {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text-primary);
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Lern2ern</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#lernTokens">LernTokens</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Welcome to Lern2ern</h1>
+        <p>Innovative solutions for modern learning. Join us today and experience the future of education.</p>
+        <a href="#" class="cta-button" id="openSignUpModalHero">Get Started!</a>
+    </section>
+
+    <!-- About Section -->
+    <section class="features" id="about">
+        <h2>About Us</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>Our Mission</h3>
+                <p>We aim to revolutionize education through innovative tokenization and AI-powered tools.</p>
+            </div>
+            <div class="feature">
+                <h3>Our Vision</h3>
+                <p>To create a sustainable and inclusive learning ecosystem for everyone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LernTokens Section -->
+    <section class="features" id="lernTokens">
+        <h2>LernTokens</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>What are LernTokens?</h3>
+                <p>LernTokens are digital rewards for academic and extracurricular achievements.</p>
+            </div>
+            <div class="feature">
+                <h3>How to Earn</h3>
+                <p>Complete tasks, participate in projects, and excel in your studies to earn LernTokens.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="features" id="contact">
+        <h2>Contact Us</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>Email</h3>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@lern2ern.io</p>
+                </div>
+            </div>
+            <div class="feature">
+                <h3>Phone</h3>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <p>+1 (123) 456-7890</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p>&copy; 2025 Lern2ern.io. All rights reserved.</p>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSignInModal">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signInForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+            </form>
+            <p class="toggle-form" id="switchToSignUp">Don't have an account? Sign Up</p>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signUpModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSignUpModal">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="signUpForm">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p class="toggle-form" id="switchToSignIn">Already have an account? Sign In</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle modal interactions
+        const signInModal = document.getElementById('signInModal');
+        const signUpModal = document.getElementById('signUpModal');
+        const openSignUpModalHero = document.getElementById('openSignUpModalHero');
+        const closeSignInModal = document.getElementById('closeSignInModal');
+        const closeSignUpModal = document.getElementById('closeSignUpModal');
+        const switchToSignUp = document.getElementById('switchToSignUp');
+        const switchToSignIn = document.getElementById('switchToSignIn');
+
+        // Open Sign Up Modal from Hero Section
+        openSignUpModalHero.addEventListener('click', (e) => {
+            e.preventDefault();
+            signUpModal.style.display = 'flex';
+        });
+
+        // Close Modals
+        closeSignInModal.addEventListener('click', () => {
+            signInModal.style.display = 'none';
+        });
+
+        closeSignUpModal.addEventListener('click', () => {
+            signUpModal.style.display = 'none';
+        });
+
+        // Switch between Sign In and Sign Up
+        switchToSignUp.addEventListener('click', () => {
+            signInModal.style.display = 'none';
+            signUpModal.style.display = 'flex';
+        });
+
+        switchToSignIn.addEventListener('click', () => {
+            signUpModal.style.display = 'none';
+            signInModal.style.display = 'flex';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === signInModal) {
+                signInModal.style.display = 'none';
+            }
+            if (event.target === signUpModal) {
+                signUpModal.style.display = 'none';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Progress Bar
+        const scrollProgress = document.querySelector('.scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollTop = document.documentElement.scrollTop;
+            const progress = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = `${progress}%`;
+        });
+    </script>
+</body>
+</html>
