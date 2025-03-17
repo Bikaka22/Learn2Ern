@@ -16,7 +16,8 @@ LERN2ERN Concepts: The code integrates key elements of the Lern2ern ecosystem an
  Screenshots
 Here are screenshots of the results we’ve developed:
 
-Onboarding Screen: ![image](https://github.com/user-attachments/assets/362f46ef-c548-429e-8b7e-35e9afb21591)
+Onboarding Screen: ![image](https://github.com/user-attachments/assets/76c930b8-b2c5-4b85-a571-9765ddbf773e)
+
 
 Digital Wallet Interface And Token Dashboard: ![image](https://github.com/user-attachments/assets/d211746c-9d46-4e5a-a87e-2ec068eef8a9)
 
